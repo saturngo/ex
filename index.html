@@ -12,28 +12,40 @@
   <h1><a href="#!web" onclick="fetchPage('web')">WEB</a></h1>
   <div id="grid">
    <ol id="nav">
-     <li><a href="#!html" onclick="fetchPage('html')">HTML</a></li>
-     <li><a href="#!css" onclick="fetchPage('css')">CSS</a></li>
-     <li><a href="#!javascript" onclick="fetchPage('javascript')">JavaScript</a></li>
    </ol>
    <div id="article">
    <article>
    </article>
+   <script>
+    function fetchPage(name){
+      fetch(name).then(function(response){
+        response.text().then(function(text){
+          document.querySelector('article').innerHTML=text;
+        })
+      });
+    }
+    if(location.hash){
+      fetchPage(location.hash.substr(2));
+    } else {
+      fetchPage('web');
+    }
+    fetch('list').then(function(response){
+      response.text().then(function(text){
+        var items=text.split(',');
+        var i=0;
+        var tags='';
+        while(i<items.length){
+          var item = items[i];
+          item=item.trim();
+          var tag='<li><a href="#!'+item+'" onclick="fetchPage(\''+item+'\')">'+item+'</a></li>'
+          tags=tags+tag;
+          i=i+1;
+        }
+        document.querySelector('#nav').innerHTML=tags;
+      })
+    })
+   </script>
    </div>
   </div>
-  <script>
-  function fetchPage(name){
-    fetch(name).then(function(response){
-      response.text().then(function(text){
-        document.querySelector('article').innerHTML=text;
-      })
-    });
-  }
-  if(location.hash){
-    fetchPage(location.hash.substr(2));
-  } else {
-    fetchPage('web');
-  }
-  </script>
 </body>
 </html>
