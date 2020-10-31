@@ -9,12 +9,12 @@
 </head>
 <body>
   <input type="button" value="night" onclick="nightDayHandler(this);">
-  <h1><a onclick="fetchPage('web')">WEB</a></h1>
+  <h1><a href="#!web" onclick="fetchPage('web')">WEB</a></h1>
   <div id="grid">
-   <ol>
-     <li><a onclick="fetchPage('html')">HTML</a></li>
-     <li><a onclick="fetchPage('css')">CSS</a></li>
-     <li><a onclick="fetchPage('javascript')">JavaScript</a></li>
+   <ol id="nav">
+     <li><a href="#!html" onclick="fetchPage('html')">HTML</a></li>
+     <li><a href="#!css" onclick="fetchPage('css')">CSS</a></li>
+     <li><a href="#!javascript" onclick="fetchPage('javascript')">JavaScript</a></li>
    </ol>
    <div id="article">
    <article>
@@ -28,6 +28,11 @@
         document.querySelector('article').innerHTML=text;
       })
     });
+  }
+  if(location.hash){
+    fetchPage(location.hash.substr(2));
+  } else {
+    fetchPage('web');
   }
   </script>
 </body>
